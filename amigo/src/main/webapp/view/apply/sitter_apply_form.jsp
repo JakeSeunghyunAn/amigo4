@@ -10,6 +10,19 @@
   crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById("sitter_apply").addEventListener("submit", function(e) {
+        var othersInput = document.getElementById("sitter_others_input");
+        var othersRadio = document.getElementById("flexRadioDefault6");
+        if (othersRadio.checked && othersInput.value === "") {
+            alert("내용을 입력해주세요");
+            e.preventDefault();
+        }
+    });
+</script>
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>My22_펫시터지원폼</title>
@@ -18,12 +31,15 @@
     <![endif]-->	
 </head>
 <body>
-	
+	      <!-- not null  이면 Required 를 인풋에다가 쓰면되겠다.  세션에서 로긴한사람 회원정보만 담아서 이름이나 주소, 연락처를 뿌려주면될텐데. -->
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 		
-			<form action="sitter_apply_form.do" method="post">
+			<form action="sitter_apply_form.do" id="sitter_apply" method="post">
 			<div class="row">
+			
+				<input type="hidden" name="${ SitterVO.getUser_no }">
+			
 				<h4>1. 기본정보</h4>
 				<div class="sit_photo">프로필 사진</div>
 					<div class="myPhoto text-center">
@@ -42,7 +58,7 @@
 				<div class="id_wrap">
 					<div class="user_name">지원자 성명</div>
 					<div class="id_input_box">
-					<input class="id_input text-center" name="홍길동">
+					<input class="id_input text-center" name="${ UserVO.getUser_name }">
 					</div>
 				</div><br>
 				
@@ -52,7 +68,7 @@
 					<input type="radio"  class="btn-check" name="g_options" id="option1" autocomplete="off">
 					<label class="btn btn-secondary" for="option1">남성</label>
 					<input type="radio"  class="btn-check" name="g_options" id="option2" autocomplete="off">
-					<label class="btn btn-secondary" for="option1">여성</label>
+					<label class="btn btn-secondary" for="option2">여성</label>
 					</div>
 				</div><br><br> 
 				
@@ -83,11 +99,11 @@
 				
 				<div class="smoking_wrap">
 					<div class="sit_smoking">흡연여부</div>
-					<div class="smiking_input_box">
-					<input type="radio"  class="btn-check" name="s_options" id="option1" autocomplete="off">
-					<label class="btn btn-secondary" for="option1">흡연</label>
-					<input type="radio"  class="btn-check" name="s_options" id="option2" autocomplete="off">
-					<label class="btn btn-secondary" for="option1">비흡연</label>
+					<div class="smoking_input_box">
+					<input type="radio"  class="btn-check" name="s_options" id="option3" autocomplete="off">
+					<label class="btn btn-secondary" for="option3">흡연</label>
+					<input type="radio"  class="btn-check" name="s_options" id="option4" autocomplete="off">
+					<label class="btn btn-secondary" for="option4">비흡연</label>
 					</div>
 				</div><br><br>
 				
@@ -99,26 +115,26 @@
  						 <label class="form-check-label" for="flexRadioDefault1">주부</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+ 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
  						 <label class="form-check-label" for="flexRadioDefault2">학생</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
- 						 <label class="form-check-label" for="flexRadioDefault2">직장인</label>
+ 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+ 						 <label class="form-check-label" for="flexRadioDefault3">직장인</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
- 						 <label class="form-check-label" for="flexRadioDefault2">프리랜서</label>
+ 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+ 						 <label class="form-check-label" for="flexRadioDefault4">프리랜서</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
- 						 <label class="form-check-label" for="flexRadioDefault2">구직자</label>
+ 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5">
+ 						 <label class="form-check-label" for="flexRadioDefault5">구직자</label>
 					</div>
 					<div class="form-check">
- 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
- 						 <label class="form-check-label" for="flexRadioDefault2">직접 입력</label>
+ 						 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6">
+ 						 <label class="form-check-label" for="flexRadioDefault6">직접 입력</label>
 					</div>
-					<input class="sitter_others_input text-center" placeholder="이곳에 직접 입력해주세요">
+					<input class="sitter_others_input text-center" id="sitter_others_input" placeholder="이곳에 직접 입력해주세요">
 				</div><br><br>
 				
 				<hr />

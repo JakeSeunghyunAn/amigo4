@@ -11,6 +11,7 @@ import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,69 +19,53 @@ import com.lec.amigo.chat.JDBCUtility.JDBCUtility;
 import com.lec.amigo.vo.ChatVO;
 import com.lec.amigo.vo.SitterVO;
 import com.lec.amigo.vo.UserVO;
-import com.lec.amigo.vo.SitterVO;
 
-@Repository
+
+@Repository("sitterDAO")
+@PropertySource("classpath:config/usersql.properties")
 
 public class SitterDAO {
 
-	public List<SitterVO> getSitterList(int index){    
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	Environment environment;
+	
+	private String insertSitter = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
+			+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	
+	
+	public int insertSitter(SitterVO svo) {
 		
-		List<SitterVO> sitList = new ArrayList<SitterVO>();
-		Connection conn = JDBCUtility.getConnection();
-		String sql = ""; 
-		                     
-		ResultSet rs =null;      
-		PreparedStatement pstmt=null;
+
+	
+		/*int user_no = uvo.getUser_no();
+	    String sit_gender = svo.getSit_gender();
+	    String sit_birth = svo.getSit_birth();
+	    boolean sit_smoking = svo.isSit_smoking();
+	    String sit_job = svo.getSit_job();
+	    String sit_days = svo.getSit_days();
+	    String sit_time = svo.getSit_time();
+	    boolean sit_exp = svo.isSit_exp();
+	    String sit_care_exp = svo.getSit_care_exp();
+	    String sit_intro = svo.getSit_intro();
+	    String sit_photo = svo.getSit_intro();
+	    boolean sit_auth_is = svo.isSit_auth_is();*/
 		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, index);
-			rs = pstmt.executeQuery(sql);
-			
-			
-			while(rs.next()) {
-				SitterVO sit = new SitterVO();
-				
-			    // db에서 vo형태로 가져온 값을 시터vo에 넣는다?
-				sit.setSit_no(rs.getInt("sit_no"));
-				sit.setUser_no(rs.getInt("user_no"));
-				sit.setSit_gender(rs.getString("sit_gender"));
-				sit.setSit_birth(rs.getString("sit_birth"));
-				sit.setSit_smoking(rs.getBoolean("sit_smoking"));
-				sit.setSit_job(rs.getString("sit_job"));
-				sit.setSit_days(rs.getString("sit_days"));
-				sit.setSit_time(rs.getString("sit_time"));
-				sit.setSit_exp(rs.getBoolean("sit_exp"));
-				sit.setSit_care_exp(rs.getString("sit_care_exp"));
-				sit.setSit_intro(rs.getString("sit_intro"));
-				sit.setSit_photo(rs.getString("sit_photo"));
-				
-				
-				sitList.add(sit);
-			}
-		} catch (Exception e) {
-			System.out.println("접속 실패" + e.getMessage());
-			
-		}finally {
-			JDBCUtility.close(conn, rs, pstmt);
-		}
-		return sitList;
-	}
-	/*
-	public int insertSitter(SitterVO sv, UserVO uv) {
 		String sql = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
 				+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql, sv.getUser_no(), sv.getSit_gender(), 
-        		sv.getSit_birth(), sv.isSit_smoking(),
-        		sv.getSit_job(), sv.getSit_days(), sv.getSit_time(), 
-        		sv.isSit_exp(), sv.getSit_care_exp(), sv.getSit_intro(),
-        		sv.getSit_photo());
+       
+		jdbcTemplate.update(sql, svo.getUser_no(), svo.getSit_gender(), 
+        		svo.getSit_birth(), svo.isSit_smoking(),
+        		svo.getSit_job(), svo.getSit_days(), svo.getSit_time(), 
+        		svo.isSit_exp(), svo.getSit_care_exp(), svo.getSit_intro(),
+        		svo.getSit_photo());
    
         return 0;
         
 	}
-		*/
+		
 		
 		
 		
