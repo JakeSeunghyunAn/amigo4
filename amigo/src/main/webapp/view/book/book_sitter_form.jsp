@@ -69,9 +69,14 @@
 			
 			<b>개인정보이용동의</b><br>
 			
-			<p>얼마나 튼튼하며 그들의 피부가 얼마나ㅁㄴㅇㅁㄴㅇㄴㅁㅇ</p>
 			
-			<div class="btn" onclick="">더보기</div><br>
+			
+			
+			
+			<div class="btn" data-bs-toggle="collapse" data-bs-target="#term">더보기</div><br>
+			
+			<p id="term" class="collapse">얼마나 튼튼하며 그들의 피부가 얼마나ㅁㄴㅇㅁㄴㅇㄴㅁㅇ</p>
+			
 			<button class="btn btn-primary" onclick="history.back(-1)">이전</button>
 			<button type="submit" class="btn btn-primary">확인</button>
 			</form>
@@ -166,9 +171,6 @@
 		<body>
    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
    		<input type="text" id="datepicker" class="form-control"/>
-   		
-   		
-   		
    		
    		
 		</body>
