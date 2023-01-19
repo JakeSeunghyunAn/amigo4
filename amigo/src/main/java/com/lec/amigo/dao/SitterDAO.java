@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import com.lec.amigo.vo.UserVO;
 
 
 @Repository("sitterDAO")
-@PropertySource("classpath:config/usersql.properties")
+@PropertySource("classpath:config/sittersql.properties")
 
 public class SitterDAO {
 
@@ -32,37 +33,30 @@ public class SitterDAO {
 	@Autowired
 	Environment environment;
 	
-	private String insertSitter = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
-			+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	private String insertSitter = "";
 	
-	
-	public int insertSitter(SitterVO svo) {
+	@PostConstruct
+	public void getSqlProperties() {
 		
-
+		insertSitter = environment.getProperty("insertSitter");
+	}
 	
-		/*int user_no = uvo.getUser_no();
-	    String sit_gender = svo.getSit_gender();
-	    String sit_birth = svo.getSit_birth();
-	    boolean sit_smoking = svo.isSit_smoking();
-	    String sit_job = svo.getSit_job();
-	    String sit_days = svo.getSit_days();
-	    String sit_time = svo.getSit_time();
-	    boolean sit_exp = svo.isSit_exp();
-	    String sit_care_exp = svo.getSit_care_exp();
-	    String sit_intro = svo.getSit_intro();
-	    String sit_photo = svo.getSit_intro();
-	    boolean sit_auth_is = svo.isSit_auth_is();*/
+	//private String insertSitter = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
+	//		+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	// 23/01/19 : JDBC템플릿이,,,즉,,property 가 안먹힌다면, 주석을 푼다. 23/01/19
+	
+	public SitterVO insertSitter(SitterVO svo) {
 		
-		String sql = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
-				+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		 
+	
        
-		jdbcTemplate.update(sql, svo.getUser_no(), svo.getSit_gender(), 
+		jdbcTemplate.update(insertSitter, svo.getUser_no(), svo.getSit_gender(), 
         		svo.getSit_birth(), svo.isSit_smoking(),
         		svo.getSit_job(), svo.getSit_days(), svo.getSit_time(), 
         		svo.isSit_exp(), svo.getSit_care_exp(), svo.getSit_intro(),
         		svo.getSit_photo());
    
-        return 0;
+        return svo;
         
 	}
 		
@@ -71,6 +65,32 @@ public class SitterDAO {
 		
 	}
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //sit.setSitNo(rs.getInt("sit_no"));
@@ -116,3 +136,19 @@ public class SitterDAO {
 			}
 	}*/
 
+
+/*int user_no = uvo.getUser_no();
+	    String sit_gender = svo.getSit_gender();
+	    String sit_birth = svo.getSit_birth();
+	    boolean sit_smoking = svo.isSit_smoking();
+	    String sit_job = svo.getSit_job();
+	    String sit_days = svo.getSit_days();
+	    String sit_time = svo.getSit_time();
+	    boolean sit_exp = svo.isSit_exp();
+	    String sit_care_exp = svo.getSit_care_exp();
+	    String sit_intro = svo.getSit_intro();
+	    String sit_photo = svo.getSit_intro();
+	    boolean sit_auth_is = svo.isSit_auth_is();*/
+
+//String sql = "INSERT INTO pet_sitter (user_no, sit_gender, sit_birth, sit_smoking, sit_job, sit_days, "
+//		+ "sit_time, sit_exp, sit_care_exp, sit_intro, sit_photo) VALUES (?,?,?,?,?,?,?,?,?,?,?)";

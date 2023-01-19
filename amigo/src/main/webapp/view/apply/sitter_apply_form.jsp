@@ -35,7 +35,7 @@
 	<%@include file="/includes/header.jsp" %>
 		<div class="container">
 		
-			<form action="sitter_apply_form.do" id="sitter_apply" method="post">
+			<form action="sitter_apply_form.do" method="post">
 			<div class="row">
 			
 				<input type="hidden" name="${ SitterVO.getUser_no }">
