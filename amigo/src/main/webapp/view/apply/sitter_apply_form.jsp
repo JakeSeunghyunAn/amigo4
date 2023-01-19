@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    document.getElementById("sitter_apply").addEventListener("submit", function(e) {
+    document.getElementById("sitter_apply_form").addEventListener("submit", function(e) {
         var othersInput = document.getElementById("sitter_others_input");
         var othersRadio = document.getElementById("flexRadioDefault6");
         if (othersRadio.checked && othersInput.value === "") {
@@ -38,7 +38,8 @@
 			<form action="sitter_apply_form.do" method="post">
 			<div class="row">
 			
-				<input type="hidden" name="${ SitterVO.getUser_no }">
+				<input type="hidden" name="user_name" value="${ sessionScope.user.getUser_name() }" >
+				<input type="hidden" name="user_name" value="${ sessionScope.sitter.getSitter_name() }" >
 			
 				<h4>1. 기본정보</h4>
 				<div class="sit_photo">프로필 사진</div>
@@ -58,7 +59,7 @@
 				<div class="id_wrap">
 					<div class="user_name">지원자 성명</div>
 					<div class="id_input_box">
-					<input class="id_input text-center" name="${ UserVO.getUser_name }">
+					<input class="id_input text-center" name="${ sessionScope.user.getUser_name }">
 					</div>
 				</div><br>
 				
@@ -84,7 +85,7 @@
 				<div class="phone_wrap">
 					<div class="user_phone">연락처</div>
 					<div class="phone_input_box">
-					<input class="phone_input text-center">
+					<input class="phone_input text-center" value="${ sessionScope.user.getUser_phone() }">
 				</div>
 					<span>입력한 휴대폰 번호로 합격 여부를 알려드립니다.</span>
 				</div><br>
@@ -92,7 +93,7 @@
 				<div class="addr_wrap">
 					<div class="user_addr">주소</div>
 					<div class="addr_input_box">
-					<input class="phone_input text-center">
+					<input class="phone_input text-center" value="${ sessionScope.user.getUser_addr() }">
 				</div>
 					<span>시/군/구까지 입력해주세요.</span>
 				</div><br>
